@@ -1,0 +1,152 @@
+{
+  "project": {
+    "key": "SMA",
+    "name": "AI Stock Market Assistant"
+  },
+  "epics": [
+    {
+      "key": "SMA-E1",
+      "summary": "AI Harness, Permissions & Tool Calling Core",
+      "owner_role": "Backend / AI Engineer",
+      "stories": [
+        {
+          "key": "SMA-101",
+          "summary": "Implement AI Harness Context & Workflow Orchestrator",
+          "points": 5,
+          "acceptance_criteria": [
+            "Resolve canonical ticker symbols from conversational queries and persist turn history.",
+            "Return structured narrative, charts, tables, citations, assumptions, and disclaimer."
+          ]
+        },
+        {
+          "key": "SMA-102",
+          "summary": "Enforce Harness Permission Policy & Guardrails",
+          "points": 3,
+          "acceptance_criteria": [
+            "Reject unapproved tools and malformed ticker symbols with PermissionDeniedError.",
+            "Enforce AST pre-check before any Python sandbox execution."
+          ]
+        }
+      ]
+    },
+    {
+      "key": "SMA-E2",
+      "summary": "MCP Integrations (Market Data & SEC EDGAR)",
+      "owner_role": "Data / Integrations Engineer",
+      "stories": [
+        {
+          "key": "SMA-201",
+          "summary": "Build market-data-mcp Server (yfinance + Technical Indicators)",
+          "points": 5,
+          "acceptance_criteria": [
+            "Expose get_quote, get_ohlcv, and get_technical_indicators over MCP.",
+            "Compute SMA, EMA, Bollinger Bands, RSI, MACD, ATR, and volume signals."
+          ]
+        },
+        {
+          "key": "SMA-202",
+          "summary": "Build company-research-mcp Server (SEC EDGAR + Financials)",
+          "points": 5,
+          "acceptance_criteria": [
+            "Expose get_company_profile, get_financial_statements, and get_valuation_and_earnings over MCP.",
+            "Include SEC EDGAR CIK and recent 10-K/10-Q/8-K filing metadata with citations."
+          ]
+        }
+      ]
+    },
+    {
+      "key": "SMA-E3",
+      "summary": "Isolated Python Quantitative Sandbox",
+      "owner_role": "Platform / Security Engineer",
+      "stories": [
+        {
+          "key": "SMA-301",
+          "summary": "Build Docker-Isolated Python Sandbox & AST Validator",
+          "points": 8,
+          "acceptance_criteria": [
+            "Block unsafe imports/builtins via AST guard.",
+            "Execute code inside ephemeral container with --network none and --read-only."
+          ]
+        },
+        {
+          "key": "SMA-302",
+          "summary": "Implement Quantitative Templates (Comparison, DCF What-If, Monte Carlo)",
+          "points": 5,
+          "acceptance_criteria": [
+            "Produce normalized comparison metrics, DCF sensitivity grids, and Monte Carlo percentiles."
+          ]
+        }
+      ]
+    },
+    {
+      "key": "SMA-E4",
+      "summary": "Celery Background Workers & Progress Tracking",
+      "owner_role": "Backend / Distributed Systems",
+      "stories": [
+        {
+          "key": "SMA-401",
+          "summary": "Configure Celery + Redis Worker & Deep Analysis Task",
+          "points": 5,
+          "acceptance_criteria": [
+            "Emit progress events (10%, 45%, 75%, 100%) and support max_retries=3 with exponential backoff.",
+            "Persist final AnalysisResponse JSON in database."
+          ]
+        },
+        {
+          "key": "SMA-402",
+          "summary": "Expose Job Submission & SSE Progress Streaming Endpoints",
+          "points": 3,
+          "acceptance_criteria": [
+            "Support POST /api/jobs/deep-analysis and SSE /api/jobs/{job_id}/stream."
+          ]
+        }
+      ]
+    },
+    {
+      "key": "SMA-E5",
+      "summary": "Conversational UI, Interactive Charts & Tables",
+      "owner_role": "Frontend Engineer",
+      "stories": [
+        {
+          "key": "SMA-501",
+          "summary": "Build Next.js Conversational Workspace & Citations Drawer",
+          "points": 5,
+          "acceptance_criteria": [
+            "Render streaming/conversational analysis with expandable sources and assumptions."
+          ]
+        },
+        {
+          "key": "SMA-502",
+          "summary": "Integrate Lightweight Charts & Sortable Financial Tables",
+          "points": 5,
+          "acceptance_criteria": [
+            "Render candlestick, volume, overlay indicators, RSI/MACD sub-pane, and sortable tables."
+          ]
+        }
+      ]
+    },
+    {
+      "key": "SMA-E6",
+      "summary": "DevOps, CI/CD, AWS Architecture & Deliverables",
+      "owner_role": "Tech Lead / DevOps",
+      "stories": [
+        {
+          "key": "SMA-601",
+          "summary": "GitHub Actions CI, Docker Compose & PR Template",
+          "points": 3,
+          "acceptance_criteria": [
+            "Automated ruff lint, pytest suite, sandbox Docker build, and Next.js build on every PR."
+          ]
+        },
+        {
+          "key": "SMA-602",
+          "summary": "Architecture Diagram, Miro Blueprint & Presentation Deck",
+          "points": 3,
+          "acceptance_criteria": [
+            "Deliverables documented under docs/ and aligned with codebase."
+          ]
+        }
+      ]
+    }
+  ]
+}
